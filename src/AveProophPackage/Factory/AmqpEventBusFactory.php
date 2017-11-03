@@ -6,13 +6,11 @@ namespace AveProophPackage\Factory;
 
 use Assert\Assertion;
 use AveProophPackage\Producer\AMQPEventProducer;
-use AveProophPackage\Plugin\EventListenerExceptionHandler;
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use Prooph\Common\Event\ProophActionEventEmitter;
 use Prooph\ServiceBus\EventBus;
 use Prooph\ServiceBus\Plugin\Router\AsyncSwitchMessageRouter;
 use Prooph\ServiceBus\Plugin\Router\EventRouter;
-use Psr\Log\LoggerInterface;
 
 /**
  * Class AMQPEventBusFactory
@@ -23,18 +21,13 @@ use Psr\Log\LoggerInterface;
 class AMQPEventBusFactory
 {
     /**
-     * @param EventRouter $router
+     * @param array $routingMap
      * @param array $amqpConnectionDetails
-     * @param LoggerInterface $logger
      * @return EventBus
      * @throws \Assert\AssertionFailedException
      */
-    public static function create(
-        EventRouter $router,
-        array $amqpConnectionDetails,
-        LoggerInterface $logger
-    ) : EventBus {
-
+    public static function create(array $routingMap, array $amqpConnectionDetails) : EventBus
+    {
         Assertion::keyExists($amqpConnectionDetails, 'host');
         Assertion::keyExists($amqpConnectionDetails, 'port');
         Assertion::keyExists($amqpConnectionDetails, 'user');
@@ -45,7 +38,7 @@ class AMQPEventBusFactory
         );
 
         $eventRouter = new AsyncSwitchMessageRouter(
-            $router,
+            $eventRouter = new EventRouter($routingMap),
             new AMQPEventProducer(
                 new AMQPStreamConnection(
                     $amqpConnectionDetails['host'],
@@ -56,9 +49,6 @@ class AMQPEventBusFactory
             )
         );
         $eventRouter->attachToMessageBus($eventBus);
-
-        (new EventListenerExceptionHandler($logger))
-            ->attachToMessageBus($eventBus);
 
         return $eventBus;
     }
