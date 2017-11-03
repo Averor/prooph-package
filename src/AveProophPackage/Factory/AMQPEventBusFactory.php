@@ -28,10 +28,26 @@ class AMQPEventBusFactory
      */
     public static function create(array $routingMap, array $amqpConnectionDetails) : EventBus
     {
-        Assertion::keyExists($amqpConnectionDetails, 'host');
-        Assertion::keyExists($amqpConnectionDetails, 'port');
-        Assertion::keyExists($amqpConnectionDetails, 'user');
-        Assertion::keyExists($amqpConnectionDetails, 'pass');
+        Assertion::keyExists(
+            $amqpConnectionDetails,
+            'host',
+            "AMQPEventBusFactory requires you to provide host address of your AMQP connection under 'host' key"
+        );
+        Assertion::keyExists(
+            $amqpConnectionDetails,
+            'port',
+            "AMQPEventBusFactory requires you to provide host port of your AMQP connection under 'port' key"
+        );
+        Assertion::keyExists(
+            $amqpConnectionDetails,
+            'user',
+            "AMQPEventBusFactory requires you to provide host user of your AMQP connection under 'user' key"
+        );
+        Assertion::keyExists(
+            $amqpConnectionDetails,
+            'pass',
+            "AMQPEventBusFactory requires you to provide host password of your AMQP connection under 'pass' key"
+        );
 
         $eventBus = new EventBus(
             new ProophActionEventEmitter()
