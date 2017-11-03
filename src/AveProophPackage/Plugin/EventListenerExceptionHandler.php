@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace AveProophPackage\Plugin;
 
+use AveProophPackage\Domain\DomainEvent;
+use AveProophPackage\Logger\FailedEventListenerLogger;
 use Prooph\Common\Event\ActionEvent;
 use Prooph\ServiceBus\MessageBus;
 use Prooph\ServiceBus\Plugin\AbstractPlugin;
-use Psr\Log\LoggerInterface;
 
 /**
  * Class EventListenerExceptionHandler
@@ -17,13 +18,13 @@ use Psr\Log\LoggerInterface;
  */
 class EventListenerExceptionHandler extends AbstractPlugin
 {
-    /** @var LoggerInterface */
+    /** @var FailedEventListenerLogger */
     protected $logger;
 
     /**
-     * @param LoggerInterface $logger
+     * @param FailedEventListenerLogger $logger
      */
-    public function __construct(LoggerInterface $logger)
+    public function __construct(FailedEventListenerLogger $logger)
     {
         $this->logger = $logger;
     }
@@ -42,9 +43,9 @@ class EventListenerExceptionHandler extends AbstractPlugin
                     return;
                 }
 
-                $this->logger->error(
-                    'EventListener Exception [' . get_class($exception) . ']' . $exception->getMessage(),
-                    ['exception' => $exception]
+                $this->logger->logFailedEventListener(
+                    $actionEvent->getParam(MessageBus::EVENT_PARAM_MESSAGE),
+                    $exception
                 );
 
                 // Event listener cannot throw exception back to the app

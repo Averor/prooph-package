@@ -5,10 +5,11 @@ declare(strict_types=1);
 namespace AveProophPackage\Domain;
 
 /**
- * Class CommandHandler
+ * Class DomainEvent
  *
  * @package AveProophPackage\Domain
  * @author Averor <averor.dev@gmail.com>
  */
-abstract class CommandHandler
-{}
+abstract class DomainEvent
+{
+}

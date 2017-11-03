@@ -59,5 +59,7 @@ class AMQPEventBusFactory
 
         (new EventListenerExceptionHandler($logger))
             ->attachToMessageBus($eventBus);
+
+        return $eventBus;
     }
 }

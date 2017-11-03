@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace AveProophPackage\Factory;
 
+use Prooph\EventStoreBusBridge\CausationMetadataEnricher;
 use Prooph\ServiceBus\CommandBus;
 use Prooph\ServiceBus\Plugin\Router\CommandRouter;
 
@@ -22,10 +23,12 @@ class CommandBusFactory
     public static function create(array $routingMap) : CommandBus
     {
         $commandBus = new CommandBus();
-        $commandRouter = new CommandRouter(
-            $routingMap
-        );
-        $commandRouter->attachToMessageBus($commandBus);
+
+        (new CommandRouter($routingMap))
+            ->attachToMessageBus($commandBus);
+
+        (new CausationMetadataEnricher())
+            ->attachToMessageBus($commandBus);
 
         return $commandBus;
     }

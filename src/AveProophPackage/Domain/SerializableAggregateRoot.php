@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace AveProophPackage\Domain;
 
-use Prooph\EventSourcing\AggregateRoot;
-
 /**
  * Interface SerializableAggregateRoot
  *
