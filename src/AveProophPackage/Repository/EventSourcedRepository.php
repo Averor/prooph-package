@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace AveProophPackage\Repository;
 
 use ArrayIterator;
+use AveProophPackage\Domain\AggregateRoot;
 use AveProophPackage\Domain\Identifier;
 use Prooph\EventSourcing\Aggregate\AggregateTranslator;
 use Prooph\EventSourcing\Aggregate\AggregateType;
-use Prooph\EventSourcing\AggregateRoot;
 use Prooph\EventSourcing\Aggregate\AggregateRepository;
 use Prooph\EventStore\EventStore;
 use Prooph\EventStore\Stream;
