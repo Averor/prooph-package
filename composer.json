@@ -30,6 +30,9 @@
     "ramsey/uuid": "^3.7",
     "react/promise": "^2.5"
   },
+  "suggest": {
+    "mongodb/mongodb": "^1.2 For MongoDB based projections"
+  },
   "autoload": {
     "psr-4": {
       "AveProophPackage\\": "src/AveProophPackage"
