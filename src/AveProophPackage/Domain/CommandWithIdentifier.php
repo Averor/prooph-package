@@ -13,7 +13,7 @@ namespace AveProophPackage\Domain;
 interface CommandWithIdentifier
 {
     /**
-     * @return string
+     * @return Identifier
      */
-    public function aggregateId() : string;
+    public function aggregateId() : Identifier;
 }
