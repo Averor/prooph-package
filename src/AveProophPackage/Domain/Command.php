@@ -14,7 +14,7 @@ use Prooph\Common\Messaging\PayloadTrait;
  * @package AveProophPackage\Domain
  * @author Averor <averor.dev@gmail.com>
  */
-abstract class Command extends BaseCommand implements CommandWithAggregateId, PayloadConstructable
+abstract class Command extends BaseCommand implements CommandWithIdentifier, PayloadConstructable
 {
     use PayloadTrait;
 }

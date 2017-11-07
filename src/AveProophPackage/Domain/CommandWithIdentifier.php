@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace AveProophPackage\Domain;
 
 /**
- * Interface CommandWithAggregateId
+ * Interface CommandWithIdentifier
  *
  * @package AveProophPackage\Domain
  * @author Averor <averor.dev@gmail.com>
  */
-interface CommandWithAggregateId
+interface CommandWithIdentifier
 {
     /**
      * @return string
