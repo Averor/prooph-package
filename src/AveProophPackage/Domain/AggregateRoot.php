@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace AveProophPackage\Domain;
 
+use Prooph\EventSourcing\AggregateChanged;
 use Prooph\EventSourcing\AggregateRoot as BaseAggregateRoot;
 
 /**
@@ -15,9 +16,9 @@ use Prooph\EventSourcing\AggregateRoot as BaseAggregateRoot;
 abstract class AggregateRoot extends BaseAggregateRoot
 {
     /**
-     * @param DomainEvent $event
+     * @param AggregateChanged $event
      */
-    protected function apply(DomainEvent $event) : void
+    protected function apply(AggregateChanged $event) : void
     {
         $eventClassName = (new \ReflectionClass($event))->getShortName();
         $method = 'when' . $eventClassName;
