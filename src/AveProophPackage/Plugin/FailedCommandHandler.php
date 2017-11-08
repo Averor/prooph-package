@@ -41,9 +41,15 @@ class FailedCommandHandler extends AbstractPlugin
                 if (!$exception = $actionEvent->getParam(MessageBus::EVENT_PARAM_EXCEPTION)) {
                     return;
                 }
+
+                $handler = $actionEvent->getParam(MessageBus::EVENT_PARAM_MESSAGE_HANDLER);
+                if (is_object($handler)) {
+                    $handler = get_class($handler);
+                }
+
                 $this->logger->logFailedCommand(
                     $actionEvent->getParam(MessageBus::EVENT_PARAM_MESSAGE),
-                    $actionEvent->getParam(MessageBus::EVENT_PARAM_MESSAGE_HANDLER),
+                    $handler,
                     $exception
                 );
             },

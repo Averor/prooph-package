@@ -18,9 +18,9 @@ interface FailedCommandLogger
 {
     /**
      * @param Command $command
-     * @param CommandHandler|null $handler
+     * @param string $handler
      * @param Throwable $exception
      * @return void
      */
-    public function logFailedCommand(Command $command, ?CommandHandler $handler, Throwable $exception) : void;
+    public function logFailedCommand(Command $command, string $handler, Throwable $exception) : void;
 }
