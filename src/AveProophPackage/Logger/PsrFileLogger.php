@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace AveProophPackage\Logger;
 
 use AveProophPackage\Domain\Command;
-use AveProophPackage\Domain\CommandHandler;
 use AveProophPackage\Domain\DomainEvent;
 use Psr\Log\LoggerInterface;
 use Throwable;
@@ -15,8 +14,6 @@ use Throwable;
  *
  * @package AveProophPackage\Logger
  * @author Averor <averor.dev@gmail.com>
- *
- * @todo Implement me :)
  */
 class PsrFileLogger implements CommandLogger, EventLogger, FailedCommandLogger, FailedEventListenerLogger
 {
@@ -37,7 +34,17 @@ class PsrFileLogger implements CommandLogger, EventLogger, FailedCommandLogger, 
      */
     public function logCommand(Command $command) : void
     {
-        // TODO: Implement logCommand() method.
+        $this->logger->info(
+            sprintf(
+                "Command %s [%s] for aggregate [%s] dispatched",
+                $command->messageName(),
+                $command->uuid()->toString(),
+                $command->aggregateId()
+            ),
+            [
+                'payload' => json_encode($command->payload())
+            ]
+        );
     }
 
     /**
@@ -46,7 +53,17 @@ class PsrFileLogger implements CommandLogger, EventLogger, FailedCommandLogger, 
      */
     public function logEvent(DomainEvent $event) : void
     {
-        // TODO: Implement logEvent() method.
+        $this->logger->info(
+            sprintf(
+                "Event %s [%s] for aggregate [%s] dispatched",
+                $event->messageName(),
+                $event->uuid()->toString(),
+                $event->aggregateId()
+            ),
+            [
+                'payload' => json_encode($event->payload())
+            ]
+        );
     }
 
     /**
@@ -57,7 +74,21 @@ class PsrFileLogger implements CommandLogger, EventLogger, FailedCommandLogger, 
      */
     public function logFailedCommand(Command $command, string $handler, Throwable $exception) : void
     {
-        // TODO: Implement logFailedCommand() method.
+        $this->logger->error(
+            sprintf(
+                "Command %s [%s] for aggregate [%s] failed in handler %s with exception [%s] %s",
+                $command->messageName(),
+                $command->uuid()->toString(),
+                $command->aggregateId(),
+                $handler,
+                get_class($exception),
+                $exception->getMessage()
+            ),
+            [
+                'payload' => json_encode($command->payload()),
+                'exception' => $exception
+            ]
+        );
     }
 
     /**
