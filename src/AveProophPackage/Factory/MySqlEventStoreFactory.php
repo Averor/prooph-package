@@ -44,9 +44,6 @@ class MySqlEventStoreFactory
         $eventPublisher = new EventPublisher($eventBus);
         $eventPublisher->attachToEventStore($actionEventEmitterEventStore);
 
-        (new CausationMetadataEnricher())
-            ->attachToEventStore($actionEventEmitterEventStore);
-
         return $actionEventEmitterEventStore;
     }
 }

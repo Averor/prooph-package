@@ -27,9 +27,6 @@ class CommandBusFactory
         (new CommandRouter($routingMap))
             ->attachToMessageBus($commandBus);
 
-        (new CausationMetadataEnricher())
-            ->attachToMessageBus($commandBus);
-
         return $commandBus;
     }
 }
