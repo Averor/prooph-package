@@ -18,14 +18,17 @@ class CommandBusFactory
 {
     /**
      * @param array $routingMap
+     * @param CausationMetadataEnricher $causationMetadataEnricher
      * @return CommandBus
      */
-    public static function create(array $routingMap) : CommandBus
+    public static function create(array $routingMap, CausationMetadataEnricher $causationMetadataEnricher) : CommandBus
     {
         $commandBus = new CommandBus();
 
         (new CommandRouter($routingMap))
             ->attachToMessageBus($commandBus);
+
+        $causationMetadataEnricher->attachToMessageBus($commandBus);
 
         return $commandBus;
     }

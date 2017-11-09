@@ -26,9 +26,10 @@ class MySqlEventStoreFactory
     /**
      * @param PDO $pdo
      * @param EventBus $eventBus
+     * @param CausationMetadataEnricher $causationMetadataEnricher
      * @return EventStore
      */
-    public static function create(PDO $pdo, EventBus $eventBus) : EventStore
+    public static function create(PDO $pdo, EventBus $eventBus, CausationMetadataEnricher $causationMetadataEnricher) : EventStore
     {
         $eventStore = new MySqlEventStore(
             new FQCNMessageFactory(),
@@ -43,6 +44,8 @@ class MySqlEventStoreFactory
 
         $eventPublisher = new EventPublisher($eventBus);
         $eventPublisher->attachToEventStore($actionEventEmitterEventStore);
+
+        $causationMetadataEnricher->attachToEventStore($actionEventEmitterEventStore);
 
         return $actionEventEmitterEventStore;
     }
