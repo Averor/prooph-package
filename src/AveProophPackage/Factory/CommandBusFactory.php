@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace AveProophPackage\Factory;
 
-use Prooph\EventStoreBusBridge\CausationMetadataEnricher;
+use AveProophPackage\EventStore\Metadata\MetadataEnricherAggregate;
 use Prooph\ServiceBus\CommandBus;
 use Prooph\ServiceBus\Plugin\Router\CommandRouter;
 
@@ -18,17 +18,17 @@ class CommandBusFactory
 {
     /**
      * @param array $routingMap
-     * @param CausationMetadataEnricher $causationMetadataEnricher
+     * @param MetadataEnricherAggregate $metadataEnricherAggregate
      * @return CommandBus
      */
-    public static function create(array $routingMap, CausationMetadataEnricher $causationMetadataEnricher) : CommandBus
+    public static function create(array $routingMap, MetadataEnricherAggregate $metadataEnricherAggregate) : CommandBus
     {
         $commandBus = new CommandBus();
 
         (new CommandRouter($routingMap))
             ->attachToMessageBus($commandBus);
 
-        $causationMetadataEnricher->attachToMessageBus($commandBus);
+        $metadataEnricherAggregate->attachToMessageBus($commandBus);
 
         return $commandBus;
     }

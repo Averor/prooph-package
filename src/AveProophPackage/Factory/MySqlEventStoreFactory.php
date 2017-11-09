@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace AveProophPackage\Factory;
 
+use AveProophPackage\EventStore\Metadata\MetadataEnricherAggregate;
 use AveProophPackage\EventStore\MysqlPersistenceStrategy;
 use PDO;
 use Prooph\Common\Event\ProophActionEventEmitter;
@@ -11,7 +12,6 @@ use Prooph\Common\Messaging\FQCNMessageFactory;
 use Prooph\EventStore\ActionEventEmitterEventStore;
 use Prooph\EventStore\EventStore;
 use Prooph\EventStore\Pdo\MySqlEventStore;
-use Prooph\EventStoreBusBridge\CausationMetadataEnricher;
 use Prooph\EventStoreBusBridge\EventPublisher;
 use Prooph\ServiceBus\EventBus;
 
@@ -26,11 +26,15 @@ class MySqlEventStoreFactory
     /**
      * @param PDO $pdo
      * @param EventBus $eventBus
-     * @param CausationMetadataEnricher $causationMetadataEnricher
+     * @param MetadataEnricherAggregate $metadataEnricherAggregate
      * @return EventStore
      */
-    public static function create(PDO $pdo, EventBus $eventBus, CausationMetadataEnricher $causationMetadataEnricher) : EventStore
-    {
+    public static function create(
+        PDO $pdo,
+        EventBus $eventBus,
+        MetadataEnricherAggregate $metadataEnricherAggregate
+    ) : EventStore {
+
         $eventStore = new MySqlEventStore(
             new FQCNMessageFactory(),
             $pdo,
@@ -45,7 +49,7 @@ class MySqlEventStoreFactory
         $eventPublisher = new EventPublisher($eventBus);
         $eventPublisher->attachToEventStore($actionEventEmitterEventStore);
 
-        $causationMetadataEnricher->attachToEventStore($actionEventEmitterEventStore);
+        $metadataEnricherAggregate->attachToEventStore($actionEventEmitterEventStore);
 
         return $actionEventEmitterEventStore;
     }
