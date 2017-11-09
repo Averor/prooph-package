@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace AveProophPackage\Factory;
 
+use AveProophPackage\EventStore\MysqlPersistenceStrategy;
 use PDO;
 use Prooph\Common\Event\ProophActionEventEmitter;
 use Prooph\Common\Messaging\FQCNMessageFactory;
 use Prooph\EventStore\ActionEventEmitterEventStore;
 use Prooph\EventStore\EventStore;
 use Prooph\EventStore\Pdo\MySqlEventStore;
-use Prooph\EventStore\Pdo\PersistenceStrategy\MySqlSingleStreamStrategy;
 use Prooph\EventStoreBusBridge\CausationMetadataEnricher;
 use Prooph\EventStoreBusBridge\EventPublisher;
 use Prooph\ServiceBus\EventBus;
@@ -33,7 +33,7 @@ class MySqlEventStoreFactory
         $eventStore = new MySqlEventStore(
             new FQCNMessageFactory(),
             $pdo,
-            new MySqlSingleStreamStrategy()
+            new MysqlPersistenceStrategy()
         );
 
         $actionEventEmitterEventStore = new ActionEventEmitterEventStore(
