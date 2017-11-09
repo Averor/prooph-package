@@ -21,7 +21,7 @@ use Prooph\SnapshotStore\SnapshotStore;
  * @package AveProophPackage\Repository
  * @author Averor <averor.dev@gmail.com>
  */
-class EventSourcedRepository extends AggregateRepository
+class EventSourcedRepository extends AggregateRepository implements Repository
 {
     /**
      * @param EventStore $eventStore
