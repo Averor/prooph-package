@@ -14,8 +14,7 @@ use Prooph\ServiceBus\Plugin\Plugin as MessageBusPlugin;
 
 /**
  * Class MetadataEnricherAggregate
- * It's an extension of original Prooph\EventStore\Metadata\MetadataEnricherAggregate
- * that is, for some unknown reason, final...
+ * Based on the original Prooph\EventStore\Metadata\MetadataEnricherAggregate
  *
  * @package AveProophPackage\EventStore\Metadata
  * @author Averor <averor.dev@gmail.com>
@@ -35,6 +34,10 @@ class MetadataEnricherAggregate implements MetadataEnricher, EventStorePlugin, M
         $this->metadataEnrichers = $metadataEnrichers;
     }
 
+    /**
+     * @param Message $message
+     * @return Message
+     */
     public function enrich(Message $message): Message
     {
         foreach ($this->metadataEnrichers as $metadataEnricher) {
@@ -44,6 +47,10 @@ class MetadataEnricherAggregate implements MetadataEnricher, EventStorePlugin, M
         return $message;
     }
 
+    /**
+     * @param MessageBus $messageBus
+     * @return void
+     */
     public function attachToMessageBus(MessageBus $messageBus) : void
     {
         foreach ($this->metadataEnrichers as $metadataEnricher) {
@@ -53,6 +60,10 @@ class MetadataEnricherAggregate implements MetadataEnricher, EventStorePlugin, M
         }
     }
 
+    /**
+     * @param ActionEventEmitterEventStore $eventStore
+     * @return void
+     */
     public function attachToEventStore(ActionEventEmitterEventStore $eventStore) : void
     {
         foreach ($this->metadataEnrichers as $metadataEnricher) {
@@ -62,6 +73,10 @@ class MetadataEnricherAggregate implements MetadataEnricher, EventStorePlugin, M
         }
     }
 
+    /**
+     * @param MessageBus $messageBus
+     * @return void
+     */
     public function detachFromMessageBus(MessageBus $messageBus) : void
     {
         foreach ($this->metadataEnrichers as $metadataEnricher) {
@@ -71,6 +86,10 @@ class MetadataEnricherAggregate implements MetadataEnricher, EventStorePlugin, M
         }
     }
 
+    /**
+     * @param ActionEventEmitterEventStore $eventStore
+     * @return void
+     */
     public function detachFromEventStore(ActionEventEmitterEventStore $eventStore) : void
     {
         foreach ($this->metadataEnrichers as $metadataEnricher) {
