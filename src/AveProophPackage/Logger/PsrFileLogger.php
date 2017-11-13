@@ -6,6 +6,7 @@ namespace AveProophPackage\Logger;
 
 use AveProophPackage\Domain\Command;
 use AveProophPackage\Domain\DomainEvent;
+use Prooph\ServiceBus\Exception\EventListenerException;
 use Psr\Log\LoggerInterface;
 use Throwable;
 
@@ -98,9 +99,19 @@ class PsrFileLogger implements CommandLogger, EventLogger, FailedCommandLogger, 
      */
     public function logFailedEventListener(DomainEvent $event, Throwable $exception) : void
     {
-        $this->logger->error(
-            'EventListener Exception [' . get_class($exception) . ']' . $exception->getMessage(),
-            ['exception' => $exception]
-        );
+        if ($exception instanceof EventListenerException) {
+            /** @var Throwable $ex */
+            foreach ($exception->listenerExceptions() as $ex) {
+                $this->logger->error(
+                    'EventListener Exception [' . get_class($ex) . '] ' . $ex->getMessage(),
+                    ['exception' => $ex]
+                );
+            }
+        } else {
+            $this->logger->error(
+                'EventListener Exception [' . get_class($exception) . '] ' . $exception->getMessage(),
+                ['exception' => $exception]
+            );
+        }
     }
 }
