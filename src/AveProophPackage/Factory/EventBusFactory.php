@@ -6,6 +6,7 @@ namespace AveProophPackage\Factory;
 
 use Prooph\Common\Event\ProophActionEventEmitter;
 use Prooph\ServiceBus\EventBus;
+use Prooph\ServiceBus\Plugin\ListenerExceptionCollectionMode;
 use Prooph\ServiceBus\Plugin\Router\EventRouter;
 
 /**
@@ -27,6 +28,9 @@ class EventBusFactory
         );
         $eventRouter = new EventRouter($routingMap);
         $eventRouter->attachToMessageBus($eventBus);
+
+        (new ListenerExceptionCollectionMode())
+            ->attachToMessageBus($eventBus);
 
         return $eventBus;
     }

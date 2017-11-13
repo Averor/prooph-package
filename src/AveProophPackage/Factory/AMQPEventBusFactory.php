@@ -9,6 +9,7 @@ use AveProophPackage\Producer\AMQPEventProducer;
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use Prooph\Common\Event\ProophActionEventEmitter;
 use Prooph\ServiceBus\EventBus;
+use Prooph\ServiceBus\Plugin\ListenerExceptionCollectionMode;
 use Prooph\ServiceBus\Plugin\Router\AsyncSwitchMessageRouter;
 use Prooph\ServiceBus\Plugin\Router\EventRouter;
 
@@ -65,6 +66,9 @@ class AMQPEventBusFactory
             )
         );
         $eventRouter->attachToMessageBus($eventBus);
+
+        (new ListenerExceptionCollectionMode())
+            ->attachToMessageBus($eventBus);
 
         return $eventBus;
     }
