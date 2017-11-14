@@ -18,17 +18,19 @@ class CommandBusFactory
 {
     /**
      * @param array $routingMap
-     * @param MetadataEnricherAggregate $metadataEnricherAggregate
+     * @param MetadataEnricherAggregate|null $metadataEnricherAggregate
      * @return CommandBus
      */
-    public static function create(array $routingMap, MetadataEnricherAggregate $metadataEnricherAggregate) : CommandBus
+    public static function create(array $routingMap, ?MetadataEnricherAggregate $metadataEnricherAggregate) : CommandBus
     {
         $commandBus = new CommandBus();
 
         (new CommandRouter($routingMap))
             ->attachToMessageBus($commandBus);
 
-        $metadataEnricherAggregate->attachToMessageBus($commandBus);
+        if ($metadataEnricherAggregate) {
+            $metadataEnricherAggregate->attachToMessageBus($commandBus);
+        }
 
         return $commandBus;
     }

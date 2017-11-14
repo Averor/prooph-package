@@ -26,13 +26,13 @@ class MySqlEventStoreFactory
     /**
      * @param PDO $pdo
      * @param EventBus $eventBus
-     * @param MetadataEnricherAggregate $metadataEnricherAggregate
+     * @param MetadataEnricherAggregate|null $metadataEnricherAggregate
      * @return EventStore
      */
     public static function create(
         PDO $pdo,
         EventBus $eventBus,
-        MetadataEnricherAggregate $metadataEnricherAggregate
+        ?MetadataEnricherAggregate $metadataEnricherAggregate
     ) : EventStore {
 
         $eventStore = new MySqlEventStore(
@@ -49,7 +49,9 @@ class MySqlEventStoreFactory
         $eventPublisher = new EventPublisher($eventBus);
         $eventPublisher->attachToEventStore($actionEventEmitterEventStore);
 
-        $metadataEnricherAggregate->attachToEventStore($actionEventEmitterEventStore);
+        if ($metadataEnricherAggregate) {
+            $metadataEnricherAggregate->attachToEventStore($actionEventEmitterEventStore);
+        }
 
         return $actionEventEmitterEventStore;
     }
