@@ -115,7 +115,7 @@ class MetadataEnricherPlugin implements EventStorePlugin, MessageBusPlugin
      * @param ActionEvent $event
      * @return void
      */
-    protected function onEventStoreCreateStream(ActionEvent $event) : void
+    public function onEventStoreCreateStream(ActionEvent $event) : void
     {
         $stream = $event->getParam('stream');
 
@@ -140,7 +140,7 @@ class MetadataEnricherPlugin implements EventStorePlugin, MessageBusPlugin
      * @param ActionEvent $event
      * @return void
      */
-    protected function onEventStoreAppendToStream(ActionEvent $event) : void
+    public function onEventStoreAppendToStream(ActionEvent $event) : void
     {
         $streamEvents = $event->getParam('streamEvents');
 
@@ -175,7 +175,7 @@ class MetadataEnricherPlugin implements EventStorePlugin, MessageBusPlugin
      * @param ActionEvent $event
      * @return void
      */
-    protected function onCommandBusDispatchCommand(ActionEvent $event) : void
+    public function onCommandBusDispatchCommand(ActionEvent $event) : void
     {
         $this->currentCommand = $event->getParam(CommandBus::EVENT_PARAM_MESSAGE);
     }
@@ -184,7 +184,7 @@ class MetadataEnricherPlugin implements EventStorePlugin, MessageBusPlugin
      * @param ActionEvent $event
      * @return void
      */
-    protected function onCommandBusFinalizeCommand(ActionEvent $event) : void
+    public function onCommandBusFinalizeCommand(ActionEvent $event) : void
     {
         $this->currentCommand = null;
     }
