@@ -69,11 +69,11 @@ class PsrFileLogger implements CommandLogger, EventLogger, FailedCommandLogger, 
 
     /**
      * @param Command $command
-     * @param string $handler
+     * @param string|null $handler
      * @param Throwable $exception
      * @return void
      */
-    public function logFailedCommand(Command $command, string $handler, Throwable $exception) : void
+    public function logFailedCommand(Command $command, ?string $handler, Throwable $exception) : void
     {
         $this->logger->error(
             sprintf(
