@@ -40,10 +40,15 @@ abstract class AMQPMessageProducer implements MessageProducer
 
     /**
      * @param AMQPStreamConnection $connection
+     * @param string $exchangeName
+     * @param string $routingKey
      */
-    public function __construct(AMQPStreamConnection $connection)
+    public function __construct(AMQPStreamConnection $connection, string $exchangeName, string $routingKey)
     {
         $this->connection = $connection;
+        $this->exchangeName = $exchangeName;
+        $this->routingKey = $routingKey;
+
         $this->messageConverter = new NoOpMessageConverter();
 
         /** @var AMQPChannel $channel */
