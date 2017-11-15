@@ -23,7 +23,11 @@ use React\Promise\Deferred;
  */
 abstract class AMQPMessageProducer implements MessageProducer
 {
-    const QUEUE_NAME = '_undefined_';
+    /** @var string */
+    protected $routingKey;
+
+    /** @var string */
+    protected $exchangeName;
 
     /** @var AMQPStreamConnection */
     protected $connection;
@@ -44,16 +48,6 @@ abstract class AMQPMessageProducer implements MessageProducer
 
         /** @var AMQPChannel $channel */
         $this->channel = $this->connection->channel();
-
-        // Declare queue to be sure it exists
-        // (in other words - it's not necessary if we are sure that queue already exists)
-        $this->channel->queue_declare(
-            static::QUEUE_NAME,
-            false,
-            true,
-            false,
-            false
-        );
     }
 
     /**
@@ -83,8 +77,8 @@ abstract class AMQPMessageProducer implements MessageProducer
                     'delivery_mode' => AMQPMessage::DELIVERY_MODE_PERSISTENT
                 ]
             ),
-            '',
-            static::QUEUE_NAME
+            $this->exchangeName,
+            $this->routingKey
         );
     }
 
