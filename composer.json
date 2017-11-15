@@ -20,7 +20,6 @@
     "php": ">=7.1",
     "ext-pdo_mysql": "*",
     "beberlei/assert": "^2.7",
-    "php-amqplib/php-amqplib": "^2.7",
     "prooph/event-sourcing": "^5.2",
     "prooph/event-store-bus-bridge": "^3.0",
     "prooph/pdo-event-store": "^1.5",
@@ -31,7 +30,8 @@
     "react/promise": "^2.5"
   },
   "suggest": {
-    "mongodb/mongodb": "^1.2 For MongoDB based projections"
+    "mongodb/mongodb": "^1.2 For MongoDB based projections",
+    "php-amqplib/php-amqplib": "^2.7 For AMQP EventBus"
   },
   "autoload": {
     "psr-4": {
