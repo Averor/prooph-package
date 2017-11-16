@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace AveProophPackage\Factory;
 
-use Assert\Assertion;
-use AveProophPackage\Producer\AMQPEventProducer;
-use PhpAmqpLib\Connection\AMQPStreamConnection;
 use Prooph\Common\Event\ProophActionEventEmitter;
 use Prooph\ServiceBus\Async\MessageProducer;
 use Prooph\ServiceBus\EventBus;
