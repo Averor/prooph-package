@@ -54,7 +54,10 @@ class SnapshotProjectorFactory
                     new AggregateTranslator(),
                     $snapshotStore,
                     $aggregateTypes
-                )
+                ),
+                [
+                    \Prooph\EventStore\Projection\Projector::OPTION_PCNTL_DISPATCH => true
+                ]
             ),
             $streamName
         );
