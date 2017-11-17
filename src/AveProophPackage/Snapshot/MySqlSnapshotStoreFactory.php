@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace AveProophPackage\Factory;
+namespace AveProophPackage\Snapshot;
 
 use PDO;
 use Prooph\SnapshotStore\Pdo\PdoSnapshotStore;
@@ -11,7 +11,7 @@ use Prooph\SnapshotStore\SnapshotStore;
 /**
  * Class MySqlSnapshotStoreFactory
  *
- * @package AveProophPackage\Factory
+ * @package AveProophPackage\Snapshot
  * @author Averor <averor.dev@gmail.com>
  */
 class MySqlSnapshotStoreFactory

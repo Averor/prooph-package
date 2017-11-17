@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace AveProophPackage\Factory;
+namespace AveProophPackage\EventBus;
 
 use Prooph\Common\Event\ProophActionEventEmitter;
 use Prooph\ServiceBus\Async\MessageProducer;
@@ -14,7 +14,7 @@ use Prooph\ServiceBus\Plugin\Router\EventRouter;
 /**
  * Class AMQPEventBusFactory
  *
- * @package AveProophPackage\Factory
+ * @package AveProophPackage\EventBus
  * @author Averor <averor.dev@gmail.com>
  */
 class AMQPEventBusFactory

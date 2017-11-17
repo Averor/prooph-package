@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace AveProophPackage\Plugin;
 
-use AveProophPackage\Domain\DomainEvent;
 use AveProophPackage\Logger\FailedEventListenerLogger;
 use Prooph\Common\Event\ActionEvent;
 use Prooph\ServiceBus\MessageBus;

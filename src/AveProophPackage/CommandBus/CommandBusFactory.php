@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace AveProophPackage\Factory;
+namespace AveProophPackage\CommandBus;
 
-use AveProophPackage\EventStore\Metadata\MetadataEnricherAggregate;
+use AveProophPackage\MetadataEnricher\MetadataEnricherAggregate;
 use Prooph\ServiceBus\CommandBus;
 use Prooph\ServiceBus\Plugin\Router\CommandRouter;
 
 /**
  * Class CommandBusFactory
  *
- * @package AveProophPackage\Factory
+ * @package AveProophPackage\CommandBus
  * @author Averor <averor.dev@gmail.com>
  */
 class CommandBusFactory

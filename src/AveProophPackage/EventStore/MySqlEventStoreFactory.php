@@ -2,10 +2,9 @@
 
 declare(strict_types=1);
 
-namespace AveProophPackage\Factory;
+namespace AveProophPackage\EventStore;
 
-use AveProophPackage\EventStore\Metadata\MetadataEnricherAggregate;
-use AveProophPackage\EventStore\MysqlPersistenceStrategy;
+use AveProophPackage\MetadataEnricher\MetadataEnricherAggregate;
 use PDO;
 use Prooph\Common\Event\ProophActionEventEmitter;
 use Prooph\Common\Messaging\FQCNMessageFactory;
@@ -18,7 +17,7 @@ use Prooph\ServiceBus\EventBus;
 /**
  * Class MySqlEventStoreFactory
  *
- * @package AveProophPackage\Factory
+ * @package AveProophPackage\EventStore
  * @author Averor <averor.dev@gmail.com>
  */
 class MySqlEventStoreFactory

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace AveProophPackage\EventStore\Metadata;
+namespace AveProophPackage\MetadataEnricher;
 
 use Assert\Assertion;
 use Prooph\Common\Messaging\Message;
@@ -16,7 +16,7 @@ use Prooph\ServiceBus\Plugin\Plugin as MessageBusPlugin;
  * Class MetadataEnricherAggregate
  * Based on the original Prooph\EventStore\Metadata\MetadataEnricherAggregate
  *
- * @package AveProophPackage\EventStore\Metadata
+ * @package AveProophPackage\MetadataEnricher
  * @author Averor <averor.dev@gmail.com>
  */
 class MetadataEnricherAggregate implements MetadataEnricher, EventStorePlugin, MessageBusPlugin

@@ -54,7 +54,7 @@ abstract class CommandIssuerMetadataEnricher implements IssuerMetadataEnricher, 
     {
         $this->messageBusListeners[] = $messageBus->attach(
             CommandBus::EVENT_DISPATCH,
-            function (ActionEvent $event): void {
+            function (ActionEvent $event) : void {
 
                 $this->currentCommand = $this->enrich(
                     $event->getParam(CommandBus::EVENT_PARAM_MESSAGE)
@@ -70,7 +70,7 @@ abstract class CommandIssuerMetadataEnricher implements IssuerMetadataEnricher, 
 
         $this->messageBusListeners[] = $messageBus->attach(
             CommandBus::EVENT_FINALIZE,
-            function (ActionEvent $event): void {
+            function (ActionEvent $event) : void {
                 $this->currentCommand = null;
             },
             1000
@@ -89,12 +89,15 @@ abstract class CommandIssuerMetadataEnricher implements IssuerMetadataEnricher, 
         $this->messageBusListeners = [];
     }
 
-    public function attachToEventStore(ActionEventEmitterEventStore $eventStore): void
+    /**
+     * @param ActionEventEmitterEventStore $eventStore
+     */
+    public function attachToEventStore(ActionEventEmitterEventStore $eventStore) : void
     {
         $this->eventStoreListeners[] = $eventStore->attach(
             ActionEventEmitterEventStore::EVENT_APPEND_TO,
-            function (ActionEvent $event): void {
-                if (! $this->currentCommand instanceof Message) {
+            function (ActionEvent $event) : void {
+                if (!$this->currentCommand instanceof Message) {
                     return;
                 }
 
@@ -113,8 +116,8 @@ abstract class CommandIssuerMetadataEnricher implements IssuerMetadataEnricher, 
 
         $this->eventStoreListeners[] = $eventStore->attach(
             ActionEventEmitterEventStore::EVENT_CREATE,
-            function (ActionEvent $event): void {
-                if (! $this->currentCommand instanceof Message) {
+            function (ActionEvent $event) : void {
+                if (!$this->currentCommand instanceof Message) {
                     return;
                 }
 
@@ -139,7 +142,10 @@ abstract class CommandIssuerMetadataEnricher implements IssuerMetadataEnricher, 
         );
     }
 
-    public function detachFromEventStore(ActionEventEmitterEventStore $eventStore): void
+    /**
+     * @param ActionEventEmitterEventStore $eventStore
+     */
+    public function detachFromEventStore(ActionEventEmitterEventStore $eventStore) : void
     {
         foreach ($this->eventStoreListeners as $listenerHandler) {
             $eventStore->detach($listenerHandler);

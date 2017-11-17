@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace AveProophPackage\Logger;
 
 use AveProophPackage\Domain\Command;
-use AveProophPackage\Domain\CommandHandler;
 use Throwable;
 
 /**
