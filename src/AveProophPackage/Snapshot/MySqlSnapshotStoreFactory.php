@@ -19,7 +19,9 @@ class MySqlSnapshotStoreFactory
     public static function create(PDO $pdo) : SnapshotStore
     {
         return new PdoSnapshotStore(
-            $pdo
+            $pdo,
+            [], // map aggregate type to separate table. Tables must be created manually first!
+            'snapshots'
         );
     }
 }
