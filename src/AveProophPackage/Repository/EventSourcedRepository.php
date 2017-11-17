@@ -7,9 +7,9 @@ namespace AveProophPackage\Repository;
 use ArrayIterator;
 use AveProophPackage\Domain\AggregateRoot;
 use AveProophPackage\Domain\Identifier;
-use Prooph\EventSourcing\Aggregate\AggregateTranslator;
 use Prooph\EventSourcing\Aggregate\AggregateType;
 use Prooph\EventSourcing\Aggregate\AggregateRepository;
+use Prooph\EventSourcing\EventStoreIntegration\AggregateTranslator;
 use Prooph\EventStore\EventStore;
 use Prooph\EventStore\Stream;
 use Prooph\EventStore\StreamName;
@@ -26,14 +26,12 @@ class EventSourcedRepository extends AggregateRepository implements Repository
     /**
      * @param EventStore $eventStore
      * @param string $aggregateType
-     * @param AggregateTranslator $aggregateTranslator
      * @param SnapshotStore|null $snapshotStore
      * @param string $streamName
      */
     public function __construct(
         EventStore $eventStore,
         string $aggregateType,
-        AggregateTranslator $aggregateTranslator,
         ?SnapshotStore $snapshotStore,
         string $streamName
     ) {
@@ -51,7 +49,7 @@ class EventSourcedRepository extends AggregateRepository implements Repository
 
         parent::__construct($eventStore,
             AggregateType::fromAggregateRootClass($aggregateType),
-            $aggregateTranslator,
+            new AggregateTranslator(),
             $snapshotStore,
             $streamName,
             false
