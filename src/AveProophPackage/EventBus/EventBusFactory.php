@@ -7,6 +7,7 @@ namespace AveProophPackage\EventBus;
 use Prooph\Common\Event\ProophActionEventEmitter;
 use Prooph\ServiceBus\EventBus;
 use Prooph\ServiceBus\Plugin\ListenerExceptionCollectionMode;
+use Prooph\ServiceBus\Plugin\Plugin;
 use Prooph\ServiceBus\Plugin\Router\EventRouter;
 
 /**
@@ -19,18 +20,25 @@ class EventBusFactory
 {
     /**
      * @param array $routingMap
+     * @param array|null $plugins
      * @return EventBus
      */
-    public static function create(array $routingMap) : EventBus
+    public static function create(array $routingMap, array $plugins = null) : EventBus
     {
+        $plugins = $plugins ?: [];
+
         $eventBus = new EventBus(
             new ProophActionEventEmitter()
         );
         $eventRouter = new EventRouter($routingMap);
-        $eventRouter->attachToMessageBus($eventBus);
 
-        (new ListenerExceptionCollectionMode())
-            ->attachToMessageBus($eventBus);
+        array_push($plugins, $eventRouter);
+        array_push($plugins, new ListenerExceptionCollectionMode());
+
+        /** @var Plugin $plugin */
+        foreach ($plugins as $plugin) {
+            $plugin->attachToMessageBus($eventBus);
+        }
 
         return $eventBus;
     }
