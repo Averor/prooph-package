@@ -21,7 +21,7 @@ use React\Promise\Deferred;
  * @package AveProophPackage\Producer
  * @author Averor <averor.dev@gmail.com>
  */
-abstract class AMQPMessageProducer implements MessageProducer
+class AMQPMessageProducer implements MessageProducer
 {
     /** @var string */
     protected $routingKey;
