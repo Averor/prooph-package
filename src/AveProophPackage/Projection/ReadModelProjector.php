@@ -46,7 +46,10 @@ abstract class ReadModelProjector
      */
     public function __call($name, $arguments)
     {
-        return $this->projector->$name($arguments);
+        return call_user_func_array(
+            [$this->projector, $name],
+            $arguments
+        );
     }
 
     /**
