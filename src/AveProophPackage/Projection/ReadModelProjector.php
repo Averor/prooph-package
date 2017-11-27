@@ -40,6 +40,16 @@ abstract class ReadModelProjector
     }
 
     /**
+     * @param string $name
+     * @param mixed $arguments
+     * @return mixed
+     */
+    public function __call($name, $arguments)
+    {
+        return $this->projector->$name($arguments);
+    }
+
+    /**
      * @return IReadModelProjector
      */
     abstract public function project() : IReadModelProjector;
