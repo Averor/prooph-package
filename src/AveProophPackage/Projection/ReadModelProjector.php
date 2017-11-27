@@ -53,7 +53,17 @@ abstract class ReadModelProjector
     }
 
     /**
+     * @param bool $keepRunning
+     * @return void
+     */
+    public function run(bool $keepRunning = true) : void
+    {
+        $this->project()
+            ->run($keepRunning);
+    }
+
+    /**
      * @return IReadModelProjector
      */
-    abstract public function project() : IReadModelProjector;
+    abstract protected function project() : IReadModelProjector;
 }
