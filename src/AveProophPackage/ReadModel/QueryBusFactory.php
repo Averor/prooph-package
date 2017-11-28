@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace AveProophPackage\ReadModel;
 
 use Prooph\Common\Event\ProophActionEventEmitter;
-use Prooph\ServiceBus\Plugin\InvokeStrategy\FinderInvokeStrategy;
 use Prooph\ServiceBus\Plugin\Plugin;
 use Prooph\ServiceBus\Plugin\Router\QueryRouter;
 use Prooph\ServiceBus\QueryBus;
@@ -31,7 +30,6 @@ class QueryBusFactory
             new ProophActionEventEmitter()
         );
 
-        array_push($plugins, new FinderInvokeStrategy());
         array_push($plugins, new QueryRouter($routingMap));
 
         /** @var Plugin $plugin */
