@@ -2,12 +2,14 @@
 
 declare(strict_types=1);
 
-namespace AveProophPackage\Domain;
+namespace AveProophPackage\EventBus;
+
+use AveProophPackage\Domain\DomainEvent;
 
 /**
  * Class DomainEventListener
  *
- * @package AveProophPackage\Domain
+ * @package AveProophPackage\EventBus
  * @author Averor <averor.dev@gmail.com>
  */
 abstract class DomainEventListener
