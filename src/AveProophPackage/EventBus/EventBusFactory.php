@@ -30,9 +30,8 @@ class EventBusFactory
         $eventBus = new EventBus(
             new ProophActionEventEmitter()
         );
-        $eventRouter = new EventRouter($routingMap);
 
-        array_push($plugins, $eventRouter);
+        array_push($plugins, new EventRouter($routingMap));
         array_push($plugins, new ListenerExceptionCollectionMode());
 
         /** @var Plugin $plugin */
