@@ -33,9 +33,6 @@ class AMQPConsumer
     /** @var LoggerInterface */
     protected $logger;
 
-    /** @var resource */
-    protected $outputReader;
-
     /**
      * @param AMQPStreamConnection $connection
      * @param EventBus $eventBus
@@ -50,13 +47,10 @@ class AMQPConsumer
 
     /**
      * @param string $queueName
-     * @param resource $outputReader
      * @return void
      */
-    public function run(string $queueName, $outputReader) : void
+    public function run(string $queueName) : void
     {
-        $this->outputReader = $outputReader;
-
         /** @var AMQPChannel $channel */
         $channel = $this->connection->channel();
 
@@ -95,9 +89,7 @@ class AMQPConsumer
         );
 
         while(count($channel->callbacks)) {
-
-            fwrite($this->outputReader, '[AMQPConsumer::INFO] Awaiting messages');
-
+            $this->logger->info('AMQPConsumer - Awaiting messages');
             $channel->wait();
         }
 
@@ -114,7 +106,7 @@ class AMQPConsumer
     {
         try {
 
-            fwrite($this->outputReader, '[AMQPConsumer::INFO] Message received');
+            $this->logger->info('AMQPConsumer - Message received');
 
             /** @var FQCNMessageFactory $messageFactory */
             $messageFactory = new FQCNMessageFactory();
@@ -139,8 +131,8 @@ class AMQPConsumer
 
             try {
 
-                fwrite($this->outputReader, sprintf(
-                    "[AMQPConsumer::INFO] Message validated - %s [%s]",
+                $this->logger->info(sprintf(
+                    "AMQPConsumer - Message validated - %s [%s]",
                     $messageData['message_name'],
                     $messageData['uuid']
                 ));
@@ -153,7 +145,7 @@ class AMQPConsumer
 
                 $this->eventBus->dispatch($event);
 
-                fwrite($this->outputReader, '[AMQPConsumer::OK] Message dispatched');
+                $this->logger->info('AMQPConsumer - Message dispatched');
 
                 $this->confirmMessage($message);
 
@@ -199,8 +191,8 @@ class AMQPConsumer
      */
     protected function rejectMessage(AMQPMessage $message, ?string $reason, bool $requeue) : void
     {
-        fwrite($this->outputReader, sprintf(
-            "[AMQPConsumer::ERROR] Message rejected [%s]. Reason: %s",
+        $this->logger->error(sprintf(
+            "AMQPConsumer -  Message rejected [%s]. Reason: %s",
             ($requeue ? 'Will be requeued.' : 'Will not be requeued'),
             ($reason ?? '-')
         ));
@@ -217,7 +209,7 @@ class AMQPConsumer
      */
     protected function confirmMessage(AMQPMessage $message, ?string $reason = null) : void
     {
-        fwrite($this->outputReader,sprintf(
+        $this->logger->info(sprintf(
             "[AMQPConsumer::OK] Message confirmed%s",
             ($reason ? '. Reason: '.$reason : '')
         ));
