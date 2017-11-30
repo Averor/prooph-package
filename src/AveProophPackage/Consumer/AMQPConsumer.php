@@ -210,8 +210,8 @@ class AMQPConsumer
     protected function confirmMessage(AMQPMessage $message, ?string $reason = null) : void
     {
         $this->logger->info(sprintf(
-            "[AMQPConsumer::OK] Message confirmed%s",
-            ($reason ? '. Reason: '.$reason : '')
+            "AMQPConsumer - Message confirmed. Reason: %s",
+            ($reason ?? '-')
         ));
 
         $message->delivery_info['channel']->basic_ack(
