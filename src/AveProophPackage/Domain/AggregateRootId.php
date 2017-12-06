@@ -12,7 +12,7 @@ use Ramsey\Uuid\Uuid;
  * @package AveProophPackage\Domain
  * @author Averor <averor.dev@gmail.com>
  */
-abstract class AggregateRootId implements Identifier
+class AggregateRootId implements Identifier
 {
     /** @var string */
     protected $uuid;
