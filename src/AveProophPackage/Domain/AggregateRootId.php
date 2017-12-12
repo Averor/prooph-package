@@ -52,7 +52,7 @@ class AggregateRootId implements Identifier
     }
 
     /**
-     * @return Identifier
+     * @return Identifier|AggregateRootId
      */
     public static function create() : Identifier
     {
@@ -61,7 +61,7 @@ class AggregateRootId implements Identifier
 
     /**
      * @param string $string
-     * @return Identifier
+     * @return Identifier|AggregateRootId
      */
     public static function fromString(string $string) : Identifier
     {
